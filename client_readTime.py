@@ -1,7 +1,8 @@
 # An example script to connect to Google using socket 
 # programming in Python 
 import socket # for socket 
-import sys  
+import sys
+import struct
   
 try: 
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM) 
@@ -24,25 +25,18 @@ except socket.gaierror:
 s.connect((host_ip, port)) 
 
 print "the socket has successfully connected"
-timeInts = []
+time = []
 timeBits = ''
 
 i = 1
 while i <= 137:
     msg = s.recv(1)
     if i > 9 and i < 14:
-        print i
-        timeInts.insert(0,ord(msg))
+        time.append(ord(msg))
     i = i + 1
 
-for b in range(0,4):
-    timeBits += bin(timeInts[b])[2:].zfill(8)
-    b +=1
-    
-print >> sys.stderr,'timeBits = %s\n' % timeBits
-
-unix_time = int(timeBits, 2)
-print >> sys.stderr, 'unix timestamp = %s\n' % unix_time
+x = struct.pack('BBBB', *time)
+print struct.unpack('<i', x)[0]
 
 print 'Check:'
 import time
