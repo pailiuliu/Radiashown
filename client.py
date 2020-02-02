@@ -4,28 +4,7 @@
 import socket # for socket 
 import sys
 import struct
-  
-try: 
-    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM) 
-    print "Socket successfully created"
-except socket.error as err: 
-    print "socket creation failed with error %s" %(err)
-  
-# default port for socket 
-port = 22001
-  
-try: 
-    host_ip = '192.168.1.128'
-except socket.gaierror: 
-  
-    # this means could not resolve the host 
-    print "there was an error resolving the host"
-    sys.exit() 
-  
-# connecting to the server 
-s.connect((host_ip, port)) 
-
-print "the socket has successfully connected"
+ 
 az = []
 el = []
 detCps1 = []
@@ -40,35 +19,58 @@ detCps8 = []
 detCps = [None] * 8
 
 detectors = [detCps1, detCps2, detCps3, detCps4, detCps5, detCps6, detCps7, detCps8]
+ 
+# Create client socket
+try: 
+    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM) 
+    print "socket successfully created"
+except socket.error as err: 
+    print "socket creation failed with error %s" %(err)
+  
+port = 22001
+  
+try: 
+    host_ip = '192.168.1.128'
+except socket.gaierror: 
+    print "there was an error resolving the host"
+    sys.exit() 
+  
+# Connect to the server 
+s.connect((host_ip, port)) 
 
-i = 1
+print "the socket has successfully connected"
+
+byteCount = 1
 
 while (1):
-    if i < 138:
+    # Store relevant bytes as an array of integers 
+    if byteCount < 138:
         msg = s.recv(1)
-        if 38 <= i <= 45:
+        if 38 <= byteCount <= 45: # Store the 8 bytes of the double
             az.append(ord(msg))
-        if 46 <= i <= 53:
+        if 46 <= byteCount <= 53:
             el.append(ord(msg))
-        if 54 <= i <= 61:
+        if 54 <= byteCount <= 61:
             detCps1.append(ord(msg))
-        if 62 <= i <= 69:
+        if 62 <= byteCount <= 69:
             detCps2.append(ord(msg))
-        if 70 <= i <= 77:
+        if 70 <= byteCount <= 77:
             detCps3.append(ord(msg))
-        if 78 <= i <= 85:
+        if 78 <= byteCount <= 85:
             detCps4.append(ord(msg))
-        if 86 <= i <= 93:
+        if 86 <= byteCount <= 93:
             detCps5.append(ord(msg))
-        if 94 <= i <= 101:
+        if 94 <= byteCount <= 101:
             detCps6.append(ord(msg))
-        if 102 <= i <= 109:
+        if 102 <= byteCount <= 109:
             detCps7.append(ord(msg))
-        if 110 <= i <= 117:
+        if 110 <= byteCount <= 117:
             detCps8.append(ord(msg))
                    
-        i += 1
+        byteCount += 1 
     else:
+        # One full msg (137 bytes) has been recieved
+
         azUni = struct.pack('BBBBBBBB', *az)
         azimuth = struct.unpack('<d', azUni)[0]
     
@@ -84,6 +86,7 @@ while (1):
             detCps[d] = struct.unpack('<d', thisCpsUni)[0]
             print "Detector %d Cps = %f\n" % (d, detCps[d])
             
+        # Reset the data arrays for next message
         az = []
         el = []
         detCps1 = []
