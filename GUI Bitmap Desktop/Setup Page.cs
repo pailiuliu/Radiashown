@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace GUI_Bitmap_Desktop
 {
-    public partial class Form2 : Form
+    public partial class radSetup : Form
     {
-        public Form2()
+        public radSetup()
         {
             InitializeComponent();
         }
@@ -21,5 +21,7 @@ namespace GUI_Bitmap_Desktop
         {
 
         }
+
+ 
     }
 }

@@ -13,10 +13,10 @@ using System.Runtime.InteropServices;
 
 namespace GUI_Bitmap_Desktop
 {
-    public partial class Form1 : Form
+    public partial class Radiashown : Form
     {
         Bitmap image1, image2;
-        public Form1()
+        public Radiashown()
         {
             InitializeComponent();
         }
@@ -67,7 +67,6 @@ namespace GUI_Bitmap_Desktop
             textBox1.Text = str(results.ToArray());
         }
 
-
         private void button1_Click(object sender, EventArgs e)
         {
 
@@ -91,6 +90,13 @@ namespace GUI_Bitmap_Desktop
             }
             // Set the PictureBox to display the image.
             pictureBox1.Image = image1;
+        }
+        private void button2_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+            radSetup fsetup = new radSetup();
+            fsetup.ShowDialog();
+            this.Close();
         }
 
 
