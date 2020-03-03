@@ -1,6 +1,6 @@
 ﻿namespace GUI_Bitmap_Desktop
 {
-    partial class Form2
+    partial class radSetup
     {
         /// <summary>
         /// Required designer variable.
@@ -28,15 +28,15 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(radSetup));
             this.SuspendLayout();
             // 
-            // Form2
+            // radSetup
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Name = "Form2";
-            this.Text = "Form2";
+            this.BackColor = System.Drawing.SystemColors.ActiveBorder;
+            this.Name = "radSetup";
             this.Load += new System.EventHandler(this.Form2_Load);
             this.ResumeLayout(false);
 

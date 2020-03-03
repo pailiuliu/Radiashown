@@ -84,6 +84,9 @@
     <EmbeddedResource Include="Radiation Map.resx">
       <DependentUpon>Radiation Map.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Setup Page.aa-DJ.resx">
+      <DependentUpon>Setup Page.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Setup Page.resx">
       <DependentUpon>Setup Page.cs</DependentUpon>
     </EmbeddedResource>
