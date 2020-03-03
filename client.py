@@ -48,29 +48,28 @@ while (1):
         msg = s.recv(1)
         if 38 <= byteCount <= 45: # Store the 8 bytes of the double
             az.append(ord(msg))
-        if 46 <= byteCount <= 53:
+        else if 46 <= byteCount <= 53:
             el.append(ord(msg))
-        if 54 <= byteCount <= 61:
+        else if 54 <= byteCount <= 61:
             detCps1.append(ord(msg))
-        if 62 <= byteCount <= 69:
+        else if 62 <= byteCount <= 69:
             detCps2.append(ord(msg))
-        if 70 <= byteCount <= 77:
+        else if 70 <= byteCount <= 77:
             detCps3.append(ord(msg))
-        if 78 <= byteCount <= 85:
+        else if 78 <= byteCount <= 85:
             detCps4.append(ord(msg))
-        if 86 <= byteCount <= 93:
+        else if 86 <= byteCount <= 93:
             detCps5.append(ord(msg))
-        if 94 <= byteCount <= 101:
+        else if 94 <= byteCount <= 101:
             detCps6.append(ord(msg))
-        if 102 <= byteCount <= 109:
+        else if 102 <= byteCount <= 109:
             detCps7.append(ord(msg))
-        if 110 <= byteCount <= 117:
+        else if 110 <= byteCount <= 117:
             detCps8.append(ord(msg))
                    
         byteCount += 1 
     else:
         # One full msg (137 bytes) has been recieved
-
         azUni = struct.pack('BBBBBBBB', *az)
         azimuth = struct.unpack('<d', azUni)[0]
     
@@ -80,15 +79,18 @@ while (1):
         print "Azimuth = %f\n" % azimuth
         print "Elevation = %f\n" % elevation
 
+        detectors = [detCps1, detCps2, detCps3, detCps4, detCps5, detCps6, detCps7, detCps8]
+
         for d in range(0,8):
             thisCps = detectors[d]
             thisCpsUni = struct.pack('BBBBBBBB', *thisCps)
             detCps[d] = struct.unpack('<d', thisCpsUni)[0]
-            print "Detector %d Cps = %f\n" % (d, detCps[d])
+            print "Detector %d Cps = %f\n" % (d+1, detCps[d])
             
         # Reset the data arrays for next message
         az = []
         el = []
+        detCps = [None] * 8
         detCps1 = []
         detCps2 = []
         detCps3 = []
@@ -97,7 +99,8 @@ while (1):
         detCps6 = []
         detCps7 = []
         detCps8 = []
-
-        i = 1
+        thisCps = []
+        
+        byteCount = 1
 
     
