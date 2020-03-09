@@ -24,7 +24,7 @@ namespace GUI_Bitmap_Desktop
         private void pictureBox1_Click(object sender, EventArgs e)
         {
             //bitmap
-            image1 = new Bitmap(@"C:\Users\Marilyn\Desktop\Engineering 5\4TB6\itb137.bmp", true);
+            //image1 = new Bitmap(@"./itb137.bmp", true);
 
             //load bmp in picturebox1
             pictureBox1.Image = image1;
@@ -42,7 +42,7 @@ namespace GUI_Bitmap_Desktop
             var engine = Python.CreateEngine();
 
             // 2) Provide script and arguments
-            var script = @"C:\Users\Marilyn\Desktop\Engineering 5\4TB6\testStream.py";
+            var script = @"getRadAssistData.py";
             var source = engine.CreateScriptSourceFromFile(script);
 
             // 3) Output redirect
